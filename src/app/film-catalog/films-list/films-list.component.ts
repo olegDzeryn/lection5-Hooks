@@ -3,6 +3,9 @@ import { FilmService } from '../film.service';
 import { Film } from '../../film';
 import { SortOption } from '../../sort-option';
 import { FilmItemComponent } from '../film-item/film-item.component';
+//import { A } from '../actor-item/actor-item.component';
+import { X } from '../x/x.component';
+import { Actor } from '../../actor';
 
 @Component({
   selector: '.films',
@@ -11,15 +14,14 @@ import { FilmItemComponent } from '../film-item/film-item.component';
 })
 export class FilmsListComponent implements OnInit {
   filmsData: Film[];
+  actorsData: Actor[];
 
   sortOption: any;
   counter: number = 0;
   favoriteFilmsCount: number = 0;
+  variantDisplay: boolean = false;
 
-  // sortOptions: SortOption[] = [
-  //   { value: 1, description: 'По алфавиту: A-Z' },
-  //   { value: -1, description: 'По алфавиту: Z-A' }
-  // ];
+
 
 
 
@@ -55,9 +57,9 @@ export class FilmsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    let result: any;
+
     console.log("Hook Parent, Инициализация родительского компонента")
-    // this.filmsData = this.filmsService.getFilms();
+
     this.filmsService.getPopularFilms().subscribe(
       (filmList: any) => {
         console.log(filmList.results);
@@ -67,7 +69,7 @@ export class FilmsListComponent implements OnInit {
 
             id: result.id,
             isFavorite: false,
-            //  vote_average: result.vote_average,
+
             title: result.title,
             popularity: result.popularity,
             release_date: result.release_date,
@@ -76,33 +78,57 @@ export class FilmsListComponent implements OnInit {
 
           })
         })
-        console.log(this.filmsService.films);
-        console.log(filmList.results);
         this.filmsData = this.filmsService.getFilms();
-
-
+        console.log(this.filmsData);
       })
+
+    this.filmsService.getPopularActor().subscribe(
+      (filmList: any) => {
+        console.log(filmList.results);
+
+        filmList.results.map((result) => {
+          this.filmsService.actors.push({
+
+            id: result.id,
+            adult: false,
+            name: result.name,
+            popularity: result.popularity,
+
+            profile_path: `${this.filmsService.midImgPath}${result.profile_path}`
+
+          })
+        })
+        this.actorsData = this.filmsService.getActors();
+        console.log(this.actorsData);
+      })
+
   }
   sortOptions: SortOption[] = [
     { value: 1, description: 'Фильмы' },
     { value: -1, description: 'Актеры' }
   ];
 
-  sortFilms(arr: Film[], numDirect: number): Film[] {
-    return arr.sort((a, b) => {
-      let x = a.title.toLowerCase();
-      let y = b.title.toLowerCase();
-      if (x < y) { return -1 * numDirect; }
-      if (x > y) { return numDirect; }
-      return 0;
-    })
+  // sortFilms(arr: Film[], numDirect: number): Film[] {
+  //   return arr.sort((a, b) => {
+  //     let x = a.title.toLowerCase();
+  //     let y = b.title.toLowerCase();
+  //     if (x < y) { return -1 * numDirect; }
+  //     if (x > y) { return numDirect; }
+  //     return 0;
+  //   })
+  // }
+  sortElement(arr: Film[], numDirect: number): any {
+    numDirect === 1 ? this.filmsService.getFilms : console.log(111);
   }
 
+
+
   sortFilmCards() {
-    this.filmsData = (this.sortOption === "default")
-      ? this.filmsService.getFilms()
-      : this.sortFilms(this.filmsData, this.sortOption);
+    (this.sortOption === -1) ? this.variantDisplay = true : this.variantDisplay = false;
+
+
   }
+
 
   makeStar(film: Film) {
     film.isFavorite = !film.isFavorite;

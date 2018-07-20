@@ -34,3 +34,37 @@
     </i>
   </button>
 </ng-template>
+
+
+
+
+<!-- <img mat-card-image [src]="film.poster_path" alt="{{film.title}}">
+  <mat-card-content>
+    <p>
+      {{film.overview | slice:0:120}}...
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-icon-button color="primary">
+      <i class="material-icons">
+        play_arrow
+      </i>
+    </button>
+    <button mat-icon-button color="primary">
+      <i class="material-icons">
+        menu
+      </i>
+    </button>
+    <button *ngIf="!film.isFavorite;else fab" mat-icon-button color="primary" (click)="startFilm(film)">
+      <i class="material-icons">star</i>
+    </button>
+  </mat-card-actions>
+</mat-card>
+
+<ng-template #fab>
+  <button mat-icon-button (click)="startFilm(film)" color="accent">
+    <i class="material-icons">
+      favorite
+    </i>
+  </button>
+</ng-template> -->

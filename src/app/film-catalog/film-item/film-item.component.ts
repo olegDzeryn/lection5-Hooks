@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output, ElementRef, ViewChild, SimpleChanges} from '@angular/core';
-import {Film} from '../../film';
+import { Component, EventEmitter, Input, OnInit, Output, ElementRef, ViewChild, SimpleChanges } from '@angular/core';
+import { Film } from '../../film';
+import { Actor } from '../../actor';
 
 @Component({
   selector: 'app-film-item',
@@ -8,12 +9,13 @@ import {Film} from '../../film';
 })
 export class FilmItemComponent implements OnInit {
   @Input() film: Film;
+  @Input() acter: Actor;
   @Input() counter: number;
   @Output('star') starEmitter = new EventEmitter<Film>();
 
   constructor(private hostElement: ElementRef) {
   }
-  
+
   // получаем ссылку на конкретный DOM элемент компонента
   @ViewChild("name", { read: ElementRef }) nameDiv: ElementRef;
 
@@ -25,21 +27,21 @@ export class FilmItemComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-      console.log("Hook Child, Проперти в дочернем компоненте поменялись");
-      console.dir(changes);
-      for (let key in changes) {
-          console.log(`ключ = ${key}`) 
-          console.log(`            текущее значение = `);
-          console.dir(changes[key].currentValue)
-          console.log(`            предыдущее значение = `)
-          console.dir(changes[key].previousValue)
-      }
+    console.log("Hook Child, Проперти в дочернем компоненте поменялись");
+    console.dir(changes);
+    for (let key in changes) {
+      console.log(`ключ = ${key}`)
+      console.log(`            текущее значение = `);
+      console.dir(changes[key].currentValue)
+      console.log(`            предыдущее значение = `)
+      console.dir(changes[key].previousValue)
+    }
   }
 
   ngAfterContentInit() {
     console.log("Hook Child, Внешний контент установлен в дочерний компонент");
   }
- 
+
 
   startFilm(film: Film) {
     this.starEmitter.emit(film);

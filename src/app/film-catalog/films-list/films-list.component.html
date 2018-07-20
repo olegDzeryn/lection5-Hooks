@@ -22,16 +22,24 @@
 
 </mat-card>
 
-<mat-grid-list cols="3" rowHeight="840px">
-  <mat-grid-tile colspan="1" *ngFor="let film of filmsData">
-    <app-film-item [film]="film" [counter]="counter" (star)="makeStar($event)"></app-film-item>
+<mat-grid-list cols="3" rowHeight="840px" [class.a]="variantDisplay">
+  <mat-grid-tile colspan=" 1 " *ngFor="let film of filmsData ">
+    <app-film-item [film]="film " [counter]="counter" (star)="makeStar($event) "></app-film-item>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list cols="3 " rowHeight="840px" [class.a]="!variantDisplay">
+  <mat-grid-tile colspan="1 " *ngFor="let actor of actorsData ">
+
+    <app-actor-item [actor]="actor "></app-actor-item>
   </mat-grid-tile>
 </mat-grid-list>
 
 
-<div class="main-container">
-  <div class="fixer-container">
-    <button mat-raised-button color="primary" [disabled]="true">Загрузить еще</button>
+
+
+<div class="main-container ">
+  <div class="fixer-container ">
+    <button mat-raised-button color="primary" [disabled]="false ">Загрузить еще</button>
   </div>
 </div>
-
