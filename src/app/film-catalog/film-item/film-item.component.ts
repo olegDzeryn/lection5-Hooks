@@ -16,14 +16,11 @@ export class FilmItemComponent implements OnInit {
   constructor(private hostElement: ElementRef) {
   }
 
-  // получаем ссылку на конкретный DOM элемент компонента
-  @ViewChild("name", { read: ElementRef }) nameDiv: ElementRef;
+
 
   ngOnInit() {
     console.log("Hook Child, Инициализация дочернего компонента");
-    // this.nameDiv.nativeElement.innerHTML = "Здесь могло быть название фильма";
-    // console.log("Отображаем хост элемент");
-    // console.log(this.hostElement.nativeElement.outerHTML);
+
   }
 
   ngOnChanges(changes: SimpleChanges) {

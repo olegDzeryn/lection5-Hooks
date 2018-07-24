@@ -4,10 +4,10 @@ import { Actor } from '../../actor';
 
 @Component({
     selector: 'app-actor-item',
-    templateUrl: './x.component.html',
-    styleUrls: ['./x.component.css']
+    templateUrl: './search-component.html',
+    styleUrls: ['./search-component.css']
 })
-export class X implements OnInit {
+export class SearchComponent implements OnInit {
     // @Input() film: Film;
     @Input() actor: Actor;
     @Input() counter: number;
@@ -20,10 +20,8 @@ export class X implements OnInit {
     // @ViewChild("name", { read: ElementRef }) nameDiv: ElementRef;
 
     ngOnInit() {
-        console.log("Hook Child, Инициализация дочернего компонента");
-        // this.nameDiv.nativeElement.innerHTML = "Здесь могло быть название фильма";
-        // console.log("Отображаем хост элемент");
-        // console.log(this.hostElement.nativeElement.outerHTML);
+        
+        
     }
 
     //   ngOnChanges(changes: SimpleChanges) {

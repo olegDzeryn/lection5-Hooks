@@ -4,7 +4,8 @@ import { Film } from '../../film';
 import { SortOption } from '../../sort-option';
 import { FilmItemComponent } from '../film-item/film-item.component';
 //import { A } from '../actor-item/actor-item.component';
-import { X } from '../x/x.component';
+import { SearchComponent } from '../search-component/search-component';
+import { Sort } from '../sort/sort.component';
 import { Actor } from '../../actor';
 
 @Component({
@@ -21,46 +22,39 @@ export class FilmsListComponent implements OnInit {
   favoriteFilmsCount: number = 0;
   variantDisplay: boolean = false;
 
+  pageFilms: number = 1;
+  pageActors: number = 1;
+
+  douloud: string = 'Загрузить еще'
+
 
 
 
 
   // Получаем доступ к дочернему компоненту напрямую используя ViewChild
-  @ViewChild(FilmItemComponent) filmItem: FilmItemComponent;
+  @ViewChild(Sort) sortItem: Sort;
 
-  // Получаем доступ к списку дочерних компонентов напрямую используя ViewChildred
-  @ViewChildren(FilmItemComponent) films: QueryList<FilmItemComponent>;
-
-
-  constructor(public filmsService: FilmService) {
+  sortOneFilm(inp?: string) {
+    this.filmsData = (inp) ? this.filmsService.films.filter(film => film.title.toLowerCase().
+      includes(inp.toLowerCase()) && film.title.toLowerCase().substring(0, 1) === inp.toLowerCase().
+        substring(0, 1)) : this.filmsService.films;
   }
 
-  ngAfterViewInit() {
-    console.log("Hook Parent, Все дочерние компоненты отрендерены");
-  }
 
-  directUpdateChildren() {
-    console.log("вызываем логику дочернего компонента напрямую");
-    let result = this.filmItem.showFilmInfo();
-    console.log(result);
-  }
 
-  directUpdateAllChildren() {
-    console.log("вызываем логику в каждом дочернем компоненте")
-    this.films.forEach(item => {
-      item.showFilmInfo();
-    });
-  }
+  // directUpdateAllChildren() {
+  //   console.log("вызываем логику в каждом дочернем компоненте")
+  //   this.films.forEach(item => {
+  //     item.showFilmInfo();
+  //   });
+  // }
 
   count() {
     this.counter++;
   }
+  initGetPopularFilms() {
 
-  ngOnInit() {
-
-    console.log("Hook Parent, Инициализация родительского компонента")
-
-    this.filmsService.getPopularFilms().subscribe(
+    this.filmsService.getPopularFilms(this.pageFilms).subscribe(
       (filmList: any) => {
         console.log(filmList.results);
 
@@ -79,10 +73,11 @@ export class FilmsListComponent implements OnInit {
           })
         })
         this.filmsData = this.filmsService.getFilms();
-        console.log(this.filmsData);
       })
 
-    this.filmsService.getPopularActor().subscribe(
+  }
+  initGetPopularActors() {
+    this.filmsService.getPopularActor(this.pageActors).subscribe(
       (filmList: any) => {
         console.log(filmList.results);
 
@@ -99,8 +94,16 @@ export class FilmsListComponent implements OnInit {
           })
         })
         this.actorsData = this.filmsService.getActors();
-        console.log(this.actorsData);
+
       })
+  }
+
+  ngOnInit() {
+
+    console.log("Hook Parent, Инициализация родительского компонента")
+    this.initGetPopularFilms();
+    this.initGetPopularActors();
+
 
   }
   sortOptions: SortOption[] = [
@@ -108,15 +111,7 @@ export class FilmsListComponent implements OnInit {
     { value: -1, description: 'Актеры' }
   ];
 
-  // sortFilms(arr: Film[], numDirect: number): Film[] {
-  //   return arr.sort((a, b) => {
-  //     let x = a.title.toLowerCase();
-  //     let y = b.title.toLowerCase();
-  //     if (x < y) { return -1 * numDirect; }
-  //     if (x > y) { return numDirect; }
-  //     return 0;
-  //   })
-  // }
+
   sortElement(arr: Film[], numDirect: number): any {
     numDirect === 1 ? this.filmsService.getFilms : console.log(111);
   }
@@ -128,11 +123,21 @@ export class FilmsListComponent implements OnInit {
 
 
   }
-
-
-  makeStar(film: Film) {
-    film.isFavorite = !film.isFavorite;
-    let favoriteFilms = this.filmsData.filter(item => item.isFavorite);
-    this.favoriteFilmsCount = favoriteFilms.length;
+  setPagingFilms() {
+    this.pageFilms++;
+    this.initGetPopularFilms();
   }
+
+  setPagingActors() {
+    this.pageActors++;
+    this.initGetPopularActors();
+  }
+
+  constructor(public filmsService: FilmService) {
+  }
+
+  ngAfterViewInit() {
+    console.log("Hook Parent, Все дочерние компоненты отрендерены");
+  }
+
 }

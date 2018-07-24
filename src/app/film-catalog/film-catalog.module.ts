@@ -10,7 +10,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 //import { ActorItemComponent } from './actor-item/actor-item.component';
 import { FilmItemComponent } from './film-item/film-item.component';
-import { X } from './x/x.component';
+import { SearchComponent } from './search-component/search-component';
+import { Sort } from './sort/sort.component';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -29,7 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
     MainComponent,
     FilmsListComponent,
     FilmItemComponent,
-    X
+    SearchComponent,
+    Sort
     // ActorItemComponent
   ]
 })

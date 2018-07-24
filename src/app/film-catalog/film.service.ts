@@ -31,12 +31,13 @@ export class FilmService {
   ) { }
 
   getActors() {
-    return this.actors.slice(0, 6);
+    return this.actors;
   }
 
 
   getFilms() {
-    return this.films.slice(0, 6);
+    // return this.films.slice(0, 6);
+    return this.films;
   }
 
   getPopularFilms(page?: number) {
