@@ -1,27 +1,41 @@
 import { Component, EventEmitter, Input, OnInit, Output, ElementRef, ViewChild, SimpleChanges } from '@angular/core';
 import { Film } from '../../film';
 import { Actor } from '../../actor';
+import { FilmService } from '../film.service';
 
 @Component({
-    selector: 'app-actor-item',
+    selector: 'app-search-films',
     templateUrl: './search-component.html',
     styleUrls: ['./search-component.css']
 })
 export class SearchComponent implements OnInit {
-    // @Input() film: Film;
-    @Input() actor: Actor;
-    @Input() counter: number;
-    @Output('star') starEmitter = new EventEmitter<Film>();
+    @Input() filmsData: Film[];
+    @Input() actorsData: Actor[];
+
+    inputFilm: string;
+    inputActor: string;
+    filmsDataSearch: Film[];
+    actorsDataSearch: Actor[];
 
     constructor() {
     }
 
-    // получаем ссылку на конкретный DOM элемент компонента
-    // @ViewChild("name", { read: ElementRef }) nameDiv: ElementRef;
+
+    sortOneFilm(inp?: string) {
+        this.filmsDataSearch = (inp) ? this.filmsData.filter(film => film.title.toLowerCase().
+            includes(inp.toLowerCase()) && film.title.toLowerCase().substring(0, 1) === inp.toLowerCase().
+                substring(0, 1)) : this.filmsData;
+    }
+    sortOneActor(inp?: string) {
+        this.actorsDataSearch = (inp) ? this.actorsData.filter(actor => actor.name.toLowerCase().
+            includes(inp.toLowerCase()) && actor.name.toLowerCase().substring(0, 1) === inp.toLowerCase().
+                substring(0, 1)) : this.actorsData;
+    }
+
 
     ngOnInit() {
-        
-        
+
+
     }
 
     //   ngOnChanges(changes: SimpleChanges) {

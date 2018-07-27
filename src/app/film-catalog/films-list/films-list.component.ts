@@ -16,6 +16,9 @@ import { Actor } from '../../actor';
 export class FilmsListComponent implements OnInit {
   filmsData: Film[];
   actorsData: Actor[];
+  filmsDataFull: Film[];
+  actorsDataFull: Actor[];
+
 
   sortOption: any;
   counter: number = 0;
@@ -24,30 +27,17 @@ export class FilmsListComponent implements OnInit {
 
   pageFilms: number = 1;
   pageActors: number = 1;
-
-  douloud: string = 'Загрузить еще'
-
+  @ViewChild(SearchComponent) search: SearchComponent;
 
 
-
-
-  // Получаем доступ к дочернему компоненту напрямую используя ViewChild
-  @ViewChild(Sort) sortItem: Sort;
-
-  sortOneFilm(inp?: string) {
-    this.filmsData = (inp) ? this.filmsService.films.filter(film => film.title.toLowerCase().
-      includes(inp.toLowerCase()) && film.title.toLowerCase().substring(0, 1) === inp.toLowerCase().
-        substring(0, 1)) : this.filmsService.films;
+  searchFilms() {
+    this.search.sortOneFilm(this.search.inputFilm)
+    this.filmsData = this.search.filmsDataSearch;
   }
-
-
-
-  // directUpdateAllChildren() {
-  //   console.log("вызываем логику в каждом дочернем компоненте")
-  //   this.films.forEach(item => {
-  //     item.showFilmInfo();
-  //   });
-  // }
+  searchActors() {
+    this.search.sortOneActor(this.search.inputActor)
+    this.actorsData = this.search.actorsDataSearch;
+  }
 
   count() {
     this.counter++;
@@ -56,8 +46,6 @@ export class FilmsListComponent implements OnInit {
 
     this.filmsService.getPopularFilms(this.pageFilms).subscribe(
       (filmList: any) => {
-        console.log(filmList.results);
-
         filmList.results.map((result) => {
           this.filmsService.films.push({
 
@@ -73,38 +61,30 @@ export class FilmsListComponent implements OnInit {
           })
         })
         this.filmsData = this.filmsService.getFilms();
+        this.filmsDataFull = [...this.filmsData];
       })
 
   }
   initGetPopularActors() {
     this.filmsService.getPopularActor(this.pageActors).subscribe(
       (filmList: any) => {
-        console.log(filmList.results);
-
         filmList.results.map((result) => {
           this.filmsService.actors.push({
-
             id: result.id,
             adult: false,
             name: result.name,
             popularity: result.popularity,
-
             profile_path: `${this.filmsService.midImgPath}${result.profile_path}`
-
           })
         })
         this.actorsData = this.filmsService.getActors();
-
+        this.actorsDataFull = [...this.actorsData];
       })
   }
 
   ngOnInit() {
-
-    console.log("Hook Parent, Инициализация родительского компонента")
     this.initGetPopularFilms();
     this.initGetPopularActors();
-
-
   }
   sortOptions: SortOption[] = [
     { value: 1, description: 'Фильмы' },
@@ -118,7 +98,7 @@ export class FilmsListComponent implements OnInit {
 
 
 
-  sortFilmCards() {
+  sortElementsCards() {
     (this.sortOption === -1) ? this.variantDisplay = true : this.variantDisplay = false;
 
 
@@ -126,6 +106,7 @@ export class FilmsListComponent implements OnInit {
   setPagingFilms() {
     this.pageFilms++;
     this.initGetPopularFilms();
+
   }
 
   setPagingActors() {
@@ -136,8 +117,6 @@ export class FilmsListComponent implements OnInit {
   constructor(public filmsService: FilmService) {
   }
 
-  ngAfterViewInit() {
-    console.log("Hook Parent, Все дочерние компоненты отрендерены");
-  }
+
 
 }

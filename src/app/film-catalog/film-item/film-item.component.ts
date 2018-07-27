@@ -11,42 +11,36 @@ export class FilmItemComponent implements OnInit {
   @Input() film: Film;
   @Input() acter: Actor;
   @Input() counter: number;
-  @Output('star') starEmitter = new EventEmitter<Film>();
+  //@Output('star') starEmitter = new EventEmitter<Film>();
 
-  constructor(private hostElement: ElementRef) {
+  constructor() {
   }
+  ngOnInit() { }
+
+  // ngOnChanges(changes: SimpleChanges) {
+  //   console.log("Hook Child, Проперти в дочернем компоненте поменялись");
+  //   console.dir(changes);
+  //   for (let key in changes) {
+  //     console.log(`ключ = ${key}`)
+  //     console.log(`            текущее значение = `);
+  //     console.dir(changes[key].currentValue)
+  //     console.log(`            предыдущее значение = `)
+  //     console.dir(changes[key].previousValue)
+  //   }
+  // }
+
+  // ngAfterContentInit() {
+  //   console.log("Hook Child, Внешний контент установлен в дочерний компонент");
+  // }
 
 
+  // startFilm(film: Film) {
+  //   this.starEmitter.emit(film);
+  // }
 
-  ngOnInit() {
-    console.log("Hook Child, Инициализация дочернего компонента");
-
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    console.log("Hook Child, Проперти в дочернем компоненте поменялись");
-    console.dir(changes);
-    for (let key in changes) {
-      console.log(`ключ = ${key}`)
-      console.log(`            текущее значение = `);
-      console.dir(changes[key].currentValue)
-      console.log(`            предыдущее значение = `)
-      console.dir(changes[key].previousValue)
-    }
-  }
-
-  ngAfterContentInit() {
-    console.log("Hook Child, Внешний контент установлен в дочерний компонент");
-  }
-
-
-  startFilm(film: Film) {
-    this.starEmitter.emit(film);
-  }
-
-  showFilmInfo() {
-    console.log(this.film);
-    return true;
-  }
+  // showFilmInfo() {
+  //   console.log(this.film);
+  //   return true;
+  // }
 
 }

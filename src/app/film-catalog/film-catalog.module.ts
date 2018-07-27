@@ -9,6 +9,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 //import { ActorItemComponent } from './actor-item/actor-item.component';
+import { ActorItemComponent } from './actor-item/actor-item.component';
 import { FilmItemComponent } from './film-item/film-item.component';
 import { SearchComponent } from './search-component/search-component';
 import { Sort } from './sort/sort.component';
@@ -31,8 +32,8 @@ import { HttpClientModule } from '@angular/common/http';
     FilmsListComponent,
     FilmItemComponent,
     SearchComponent,
-    Sort
-    // ActorItemComponent
+    Sort,
+    ActorItemComponent
   ]
 })
 export class FilmCatalogModule {

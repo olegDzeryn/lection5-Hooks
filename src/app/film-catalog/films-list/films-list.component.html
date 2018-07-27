@@ -5,20 +5,20 @@
       <span>В избранное добавлено: {{favoriteFilmsCount}} элементов</span>
 
 
-      <app-sort></app-sort>
-      <button mat-raised-button (click)="sortOneFilm(sortItem.inputFilm)">Поиск</button>
+      <app-search-films [filmsData]="filmsDataFull" [actorsData]="actorsDataFull">
 
-      <!-- <button mat-raised-button (click)="directUpdateChildren()">Один Дочерний компонент</button> &nbsp;
-      <button mat-raised-button (click)="directUpdateAllChildren()">Все Дочерние компоненты</button>
-      <button mat-raised-button (click)="count()">++</button> -->
+      </app-search-films>
+      <button mat-raised-button (click)="searchFilms()">Поиск фильма</button>
+      <br>
+      <button mat-raised-button (click)="searchActors()">Поиск актера</button>
+
       <span class="example-spacer"></span>
       <div>
         <mat-form-field>
-          <mat-select placeholder="Сортировка" [(value)]="sortOption" (selectionChange)="sortFilmCards()">
+          <mat-select placeholder="Сортировка" [(value)]="sortOption" (selectionChange)="sortElementsCards()">
             <mat-option *ngFor="let option of sortOptions" [value]="option.value">
               {{option.description}}
             </mat-option>
-            <!-- <mat-option value="default">Default</mat-option> -->
           </mat-select>
         </mat-form-field>
       </div>
@@ -45,7 +45,7 @@
 
 <div class="main-container ">
   <div class="fixer-container ">
-    <button mat-raised-button color="primary" (click)="setPagingFilms()" [class.a]="variantDisplay" [disabled]="false ">{{douloud}}</button>
+    <button mat-raised-button color="primary" (click)="setPagingFilms()" [class.a]="variantDisplay" [disabled]="false ">Загрузить еще</button>
   </div>
 </div>
 

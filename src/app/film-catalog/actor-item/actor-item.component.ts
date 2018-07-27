@@ -9,8 +9,8 @@ import { Actor } from '../../actor';
 })
 export class ActorItemComponent implements OnInit {
     @Input() actor: Actor;
-    //@Input() counter: number;
-    //@Output('star') starEmitter = new EventEmitter<Film>();
+    @Input() counter: number;
+    @Output('star') starEmitter = new EventEmitter<Film>();
 
     constructor() {
     }
